@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # --- Configuration ---
-# Secret name in Google Secret Manager for the UUID
 UUID_SECRET_NAME="xray-vless-uuid"
 # Google Cloud Project ID (Replace!)
 PROJECT_ID="green-hell-450120"

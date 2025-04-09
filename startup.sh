@@ -37,7 +37,7 @@ fi
 echo "Local certificates found."
 
 # Metadata key for the UUID
-UUID_METADATA_KEY="xray-uuid" # Key we will set via gcloud command
+UUID_METADATA_KEY="xray-uuid"
 
 # Fetch UUID from instance metadata
 echo "Fetching VLESS UUID from metadata key '${UUID_METADATA_KEY}'..."

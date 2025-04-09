@@ -6,7 +6,7 @@ UUID_SECRET_NAME="xray-vless-uuid"
 # Google Cloud Project ID (Replace!)
 PROJECT_ID="green-hell-450120"
 # Your container image on GHCR (Replace!)
-XRAY_IMAGE="ghcr.io/albearthebear/xray-server:latest" # e.g., ghcr.io/albear/xray-server:latest
+XRAY_IMAGE="ghcr.io/albearthebear/xray-server-vm:latest"
 # Your domain name (Replace!)
 DOMAIN_NAME="prostoy-fitnes.xyz"
 

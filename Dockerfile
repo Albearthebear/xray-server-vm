@@ -2,7 +2,7 @@ FROM alpine:3.19
 
 WORKDIR /app
 
-# Install dependencies
+# Install dependencies (No curl needed)
 RUN apk add --no-cache ca-certificates tzdata wget unzip openssl
 
 # Create non-root user for security
@@ -17,14 +17,13 @@ RUN XRAY_VERSION=1.8.10 && \
     chmod +x /usr/local/share/xray/xray && \
     ln -s /usr/local/share/xray/xray /usr/local/bin/xray
 
-# Create directories for logs and certificates (within the container)
-RUN mkdir -p /var/log/xray /app/certs
+# Create directory for logs within container
+RUN mkdir -p /var/log/xray
+# Config and certs will be mounted by docker run
 
-# Copy the configuration file into the image
-# COPY server/config.json /app/config.json
-
-# Set ownership of app and log directories to the non-root user
-RUN chown -R xray:xray /app /var/log/xray
+# Set ownership of log directory to the non-root user
+# /app ownership doesn't strictly matter if nothing is copied there
+RUN chown -R xray:xray /var/log/xray
 
 # Use non-root user
 USER xray
@@ -34,5 +33,5 @@ EXPOSE 8000
 # Expose the internal port for health checks
 EXPOSE 80
 
-# Run xray
+# Run xray, expecting config to be mounted at /app/config.json
 CMD ["xray", "run", "-config", "/app/config.json"] 

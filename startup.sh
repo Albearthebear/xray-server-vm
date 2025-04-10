@@ -16,7 +16,7 @@ HOST_LE_CERTS_DIR="/mnt/stateful_partition/etc/letsencrypt/live/${DOMAIN_NAME}" 
 HOST_LOG_DIR="${CONFIG_DIR}/logs"
 
 # Internal container paths
-CONTAINER_CERT_DIR="/app/certs" # Where certs will be mounted inside container
+CONTAINER_CERT_DIR="/etc/letsencrypt/live/prostoy-fitnes.xyz"
 CONTAINER_CONFIG_FILE="/app/config.json"
 CONTAINER_LOG_DIR="/var/log/xray" # Match this with config.json log paths
 
@@ -34,6 +34,14 @@ if [ ! -f "${HOST_LE_CERTS_DIR}/fullchain.pem" ] || [ ! -f "${HOST_LE_CERTS_DIR}
     exit 1
 fi
 echo "Local certificates found."
+
+# Certificates are expected to be mounted read-only
+# Check the updated path inside the container
+if [ ! -f "${CONTAINER_CERT_DIR}/fullchain.pem" ] || [ ! -f "${CONTAINER_CERT_DIR}/privkey.pem" ]; then
+    echo "ERROR: Let's Encrypt certificates not found mounted at ${CONTAINER_CERT_DIR}/"
+    echo "Ensure the /etc/letsencrypt volume is mounted correctly from the host."
+    exit 1
+fi
 
 # Metadata key for the UUID
 UUID_METADATA_KEY="xray-uuid"
